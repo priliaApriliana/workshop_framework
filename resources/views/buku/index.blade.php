@@ -1,23 +1,20 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Daftar Buku')
+@section('icon', 'mdi-book-open-page-variant')
+
+@section('breadcrumb')
+<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+<li class="breadcrumb-item active">Buku</li>
+@endsection
 
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white me-2">
-            <i class="mdi mdi-book-open-page-variant"></i>
-        </span> Daftar Buku
-    </h3>
-    <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{ route('buku.create') }}" class="btn btn-gradient-primary btn-sm">
-                    <i class="mdi mdi-plus"></i> Tambah
-                </a>
-            </li>
-        </ul>
-    </nav>
+<div class="row mb-3">
+    <div class="col-12">
+        <a href="{{ route('buku.create') }}" class="btn btn-gradient-primary btn-sm">
+            <i class="mdi mdi-plus"></i> Tambah Buku
+        </a>
+    </div>
 </div>
 
 @if(session('success'))

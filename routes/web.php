@@ -1,29 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\KategoriController;
 
 // =====================
-// ROUTES AUTH (Guest Only)
+// ROUTES AUTH (Laravel UI - Otomatis)
 // =====================
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-});
+Auth::routes(['register' => false]); // Disable register jika tidak diperlukan
 
 // =====================
 // ROUTES YANG PERLU LOGIN
 // =====================
 Route::middleware('auth')->group(function () {
-    // Logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
     // Dashboard
     Route::get('/', function () {
         return view('home');
     })->name('home');
+
+    // Redirect /home ke / (karena Laravel UI default ke /home)
+    Route::get('/home', function () {
+        return redirect()->route('home');
+    });
 
     // =============================================
     // Routes untuk KATEGORI
@@ -47,3 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
     Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

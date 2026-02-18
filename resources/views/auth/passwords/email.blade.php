@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login - Purple Admin</title>
+    <title>Forgot Password - Purple Admin</title>
     <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -27,10 +27,14 @@
                                 <i class="mdi mdi-cube-outline logo-icon"></i>
                                 <span class="logo-text">Purple</span>
                             </div>
-                            <h4>Hello! let's get started</h4>
-                            <h6 class="font-weight-light">Sign in to continue.</h6>
+                            <h4>Forgot Password?</h4>
+                            <h6 class="font-weight-light">Enter your email to reset password.</h6>
                             
-                            <form class="pt-3" method="POST" action="{{ route('login') }}">
+                            @if (session('status'))
+                                <div class="alert alert-success mt-3" role="alert">{{ session('status') }}</div>
+                            @endif
+                            
+                            <form class="pt-3" method="POST" action="{{ route('password.email') }}">
                                 @csrf
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" 
@@ -39,31 +43,12 @@
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" 
-                                        id="password" name="password" placeholder="Password" required autocomplete="current-password">
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                    @enderror
-                                </div>
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">SIGN IN</button>
+                                    <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">SEND RESET LINK</button>
                                 </div>
-                                <div class="my-2 d-flex justify-content-between align-items-center">
-                                    <div class="form-check">
-                                        <label class="form-check-label text-muted">
-                                            <input type="checkbox" class="form-check-input" name="remember" {{ old('remember') ? 'checked' : '' }}> Keep me signed in
-                                        </label>
-                                    </div>
-                                    @if (Route::has('password.request'))
-                                        <a href="{{ route('password.request') }}" class="auth-link text-black">Forgot password?</a>
-                                    @endif
-                                </div>
-                                @if (Route::has('register'))
                                 <div class="text-center mt-4 font-weight-light">
-                                    Don't have an account? <a href="{{ route('register') }}" class="text-primary">Create</a>
+                                    Remember your password? <a href="{{ route('login') }}" class="text-primary">Login</a>
                                 </div>
-                                @endif
                             </form>
                         </div>
                     </div>

@@ -1,23 +1,20 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Daftar Kategori')
+@section('icon', 'mdi-folder')
+
+@section('breadcrumb')
+<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+<li class="breadcrumb-item active">Kategori</li>
+@endsection
 
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white me-2">
-            <i class="mdi mdi-folder"></i>
-        </span> Daftar Kategori
-    </h3>
-    <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{ route('kategori.create') }}" class="btn btn-gradient-primary btn-sm">
-                    <i class="mdi mdi-plus"></i> Tambah
-                </a>
-            </li>
-        </ul>
-    </nav>
+<div class="row mb-3">
+    <div class="col-12">
+        <a href="{{ route('kategori.create') }}" class="btn btn-gradient-primary btn-sm">
+            <i class="mdi mdi-plus"></i> Tambah Kategori
+        </a>
+    </div>
 </div>
 
 @if(session('success'))

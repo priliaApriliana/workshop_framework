@@ -1,21 +1,15 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Edit Buku')
+@section('icon', 'mdi-book-edit')
+
+@section('breadcrumb')
+<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+<li class="breadcrumb-item"><a href="{{ route('buku.index') }}">Buku</a></li>
+<li class="breadcrumb-item active">Edit</li>
+@endsection
 
 @section('content')
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white me-2">
-            <i class="mdi mdi-book-edit"></i>
-        </span> Edit Buku
-    </h3>
-    <nav aria-label="breadcrumb">
-        <a href="{{ route('buku.index') }}" class="btn btn-gradient-secondary btn-sm">
-            <i class="mdi mdi-arrow-left"></i> Kembali
-        </a>
-    </nav>
-</div>
-
 <div class="row">
     <div class="col-md-8 grid-margin stretch-card">
         <div class="card">
@@ -26,26 +20,38 @@
                     @method('PUT')
                     <div class="form-group">
                         <label for="kode">Kode Buku</label>
-                        <input type="text" class="form-control" id="kode" name="kode" value="{{ $buku->kode }}" required>
+                        <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" value="{{ old('kode', $buku->kode) }}" required>
+                        @error('kode')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="judul">Judul Buku</label>
-                        <input type="text" class="form-control" id="judul" name="judul" value="{{ $buku->judul }}" required>
+                        <input type="text" class="form-control @error('judul') is-invalid @enderror" id="judul" name="judul" value="{{ old('judul', $buku->judul) }}" required>
+                        @error('judul')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="pengarang">Pengarang</label>
-                        <input type="text" class="form-control" id="pengarang" name="pengarang" value="{{ $buku->pengarang }}" required>
+                        <input type="text" class="form-control @error('pengarang') is-invalid @enderror" id="pengarang" name="pengarang" value="{{ old('pengarang', $buku->pengarang) }}" required>
+                        @error('pengarang')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="idkategori">Kategori</label>
-                        <select class="form-control" id="idkategori" name="idkategori" required>
+                        <select class="form-control @error('idkategori') is-invalid @enderror" id="idkategori" name="idkategori" required>
                             <option value="">-- Pilih Kategori --</option>
                             @foreach($kategori as $kat)
-                                <option value="{{ $kat->idkategori }}" {{ $buku->idkategori == $kat->idkategori ? 'selected' : '' }}>
+                                <option value="{{ $kat->idkategori }}" {{ old('idkategori', $buku->idkategori) == $kat->idkategori ? 'selected' : '' }}>
                                     {{ $kat->nama_kategori }}
                                 </option>
                             @endforeach
                         </select>
+                        @error('idkategori')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-gradient-primary me-2">Update</button>
                     <a href="{{ route('buku.index') }}" class="btn btn-light">Batal</a>

@@ -103,11 +103,11 @@
     <!-- HEADER SURAT -->
     <div class="header">
         <div class="header-kementerian">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET DAN TEKNOLOGI</div>
-        <div class="header-univ">UNIVERSITAS CONTOH</div>
+        <div class="header-univ">UNIVERSITAS TUBAN</div>
         <div class="header-fakultas">FAKULTAS ILMU KOMPUTER</div>
         <div class="header-address">
-            Jl. Contoh No. 123, Kota Contoh 12345<br>
-            Telp: (021) 123-4567 | Email: fik@universitascontoh.ac.id
+            Jl. Padjajaran No. 123, Kabupaten Tuban 12345<br>
+            Telp: (021) 123-4567 | Email: fik@universitastuban.ac.id
         </div>
     </div>
 
@@ -142,7 +142,7 @@
         <table>
             <tr>
                 <td class="label">Hari/Tanggal</td>
-                <td>: Rabu, 19 February 2026</td>
+                <td>: Rabu, 19 Februari 2026</td>
             </tr>
             <tr>
                 <td class="label">Waktu</td>
@@ -163,7 +163,7 @@
     <!-- TANDA TANGAN - EDIT DI SINI -->
     <div class="clearfix">
         <div class="ttd">
-            <p>Jakarta, 19 February 2026</p>
+            <p>Tuban, 19 Februari 2026</p>
             <p>Dekan,</p>
             <div class="ttd-line"></div>
             <p class="ttd-name">Dr. John Doe, M.Kom</p>

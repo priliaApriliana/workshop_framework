@@ -4,11 +4,22 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\PdfController;
 
 // =====================
 // ROUTES AUTH (Laravel UI - Otomatis)
 // =====================
-Auth::routes(['register' => false]); // Disable register jika tidak diperlukan
+Auth::routes(['register' => false]);
+
+// =====================
+// ROUTES GOOGLE AUTH & OTP
+// =====================
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/otp', [GoogleController::class, 'showOtpForm'])->name('otp.form');
+Route::post('/otp/verify', [GoogleController::class, 'verifyOtp'])->name('otp.verify');
+Route::post('/otp/resend', [GoogleController::class, 'resendOtp'])->name('otp.resend');
 
 // =====================
 // ROUTES YANG PERLU LOGIN
@@ -19,14 +30,12 @@ Route::middleware('auth')->group(function () {
         return view('home');
     })->name('home');
 
-    // Redirect /home ke / (karena Laravel UI default ke /home)
+    // Redirect /home ke /
     Route::get('/home', function () {
         return redirect()->route('home');
     });
 
-    // =============================================
     // Routes untuk KATEGORI
-    // =============================================
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
     Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
     Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
@@ -35,9 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
     Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 
-    // =============================================
     // Routes untuk BUKU
-    // =============================================
     Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
     Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
     Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
@@ -45,7 +52,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
     Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
     Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
-});
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // =============================================
+    // Routes untuk PDF Generator
+    // =============================================
+    Route::get('/pdf/sertifikat', [PdfController::class, 'sertifikatForm'])->name('pdf.sertifikat.form');
+    Route::get('/pdf/sertifikat/download', [PdfController::class, 'generateSertifikat'])->name('pdf.sertifikat.generate');
+    Route::get('/pdf/undangan', [PdfController::class, 'undanganForm'])->name('pdf.undangan.form');
+    Route::get('/pdf/undangan/download', [PdfController::class, 'generateUndangan'])->name('pdf.undangan.generate');
+    });
+
+Auth::routes();

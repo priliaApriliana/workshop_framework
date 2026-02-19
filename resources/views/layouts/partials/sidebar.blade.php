@@ -38,5 +38,28 @@
                 <i class="mdi mdi-book-open-page-variant menu-icon"></i>
             </a>
         </li>
+
+        {{-- Menu PDF Generator --}}
+        <li class="nav-item {{ request()->is('pdf*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#pdf-menu" aria-expanded="{{ request()->is('pdf*') ? 'true' : 'false' }}" aria-controls="pdf-menu">
+                <span class="menu-title">PDF Generator</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-file-pdf menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->is('pdf*') ? 'show' : '' }}" id="pdf-menu">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('pdf/sertifikat*') ? 'active' : '' }}" href="{{ route('pdf.sertifikat.form') }}">
+                            <i class="mdi mdi-certificate text-warning me-2"></i> Sertifikat
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('pdf/undangan*') ? 'active' : '' }}" href="{{ route('pdf.undangan.form') }}">
+                            <i class="mdi mdi-email-outline text-info me-2"></i> Undangan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
 </nav>

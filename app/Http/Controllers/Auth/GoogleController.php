@@ -16,7 +16,10 @@ class GoogleController extends Controller
     //redirect to google
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect(); 
+        /** @var \Laravel\Socialite\Two\GoogleProvider $driver */
+        $driver = Socialite::driver('google');
+        
+        return $driver->with(['prompt' => 'select_account'])->redirect(); 
     }
 
     //handle callback from google

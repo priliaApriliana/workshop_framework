@@ -100,7 +100,6 @@
     </style>
 </head>
 <body>
-    <!-- HEADER SURAT -->
     <div class="header">
         <div class="header-kementerian">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET DAN TEKNOLOGI</div>
         <div class="header-univ">UNIVERSITAS TUBAN</div>
@@ -111,7 +110,7 @@
         </div>
     </div>
 
-    <!-- INFO SURAT - EDIT DI SINI -->
+    <!-- INFO SURAT -->
     <div class="surat-info">
         <table>
             <tr>
@@ -125,19 +124,19 @@
         </table>
     </div>
 
-    <!-- KEPADA - EDIT DI SINI -->
+    <!-- KEPADA  -->
     <div class="kepada">
         <p>Kepada Yth.<br>
         <strong>Bapak/Ibu Dosen Fakultas Ilmu Komputer</strong><br>
         di Tempat</p>
     </div>
 
-    <!-- ISI SURAT - EDIT DI SINI -->
+    <!-- ISI SURAT -->
     <div class="isi-surat">
         <p>Dengan hormat, bersama ini kami mengundang Bapak/Ibu untuk menghadiri acara yang akan dilaksanakan pada:</p>
     </div>
 
-    <!-- DETAIL ACARA - EDIT DI SINI -->
+    <!-- DETAIL ACARA -->
     <div class="detail-acara">
         <table>
             <tr>
@@ -160,7 +159,7 @@
         <p>Demikian undangan ini kami sampaikan. Atas perhatian dan kehadiran Bapak/Ibu, kami ucapkan terima kasih.</p>
     </div>
 
-    <!-- TANDA TANGAN - EDIT DI SINI -->
+    <!-- TANDA TANGAN -->
     <div class="clearfix">
         <div class="ttd">
             <p>Tuban, 19 Februari 2026</p>

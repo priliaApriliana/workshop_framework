@@ -6,6 +6,9 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\BarangController;
+
+
 
 // =====================
 // ROUTES AUTH (Laravel UI - Otomatis)
@@ -60,6 +63,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/pdf/sertifikat/download', [PdfController::class, 'generateSertifikat'])->name('pdf.sertifikat.generate');
     Route::get('/pdf/undangan', [PdfController::class, 'undanganForm'])->name('pdf.undangan.form');
     Route::get('/pdf/undangan/download', [PdfController::class, 'generateUndangan'])->name('pdf.undangan.generate');
-    });
 
-Auth::routes();
+    // Barang
+    Route::post('/print-label', [BarangController::class, 'printLabel'])->name('barang.print-label');
+    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
+    Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
+    Route::get('/barang/{barang}/edit', [BarangController::class, 'edit'])->name('barang.edit');
+    Route::put('/barang/{barang}', [BarangController::class, 'update'])->name('barang.update');
+    Route::delete('/barang/{barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+});
+
+

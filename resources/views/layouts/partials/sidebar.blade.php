@@ -39,6 +39,14 @@
             </a>
         </li>
 
+        {{-- Menu Barang --}}
+        <li class="nav-item {{ request()->is('barang*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('barang.index') }}">
+                <span class="menu-title">Barang</span>
+                <i class="mdi mdi-package-variant menu-icon"></i>
+            </a>
+        </li>
+
         {{-- Menu PDF Generator --}}
         <li class="nav-item {{ request()->is('pdf*') ? 'active' : '' }}">
             <a class="nav-link" data-bs-toggle="collapse" href="#pdf-menu" aria-expanded="{{ request()->is('pdf*') ? 'true' : 'false' }}" aria-controls="pdf-menu">

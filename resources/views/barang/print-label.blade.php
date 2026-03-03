@@ -6,57 +6,42 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 0.2cm;
+            margin: 5mm;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 8px;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; }
         table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0.15cm;
+            width: 200mm;
+            border-collapse: collapse;
             table-layout: fixed;
         }
         td {
-            width: 3.3cm;
-            height: 2.6cm;
-            border: 0.5px solid #000;
+            width: 38mm;
+            height: 18.5mm;
             text-align: center;
             vertical-align: middle;
-            padding: 0.15cm;
-            box-sizing: border-box;
+            /* top right bottom left */
+            padding: 2.7mm 1mm 0 11mm; 
         }
         .label-id {
+            font-size: 6pt;
             font-weight: bold;
-            font-size: 8px;
-            margin-bottom: 2px;
+            margin-bottom: 1mm;
         }
         .label-nama {
-            font-size: 7px;
-            margin-bottom: 2px;
+            font-size: 6pt;
+            font-weight: bold;
+            margin-bottom: 1mm;
             word-break: break-word;
             line-height: 1.2;
         }
         .label-harga-text {
-            font-size: 6px;
-            margin-bottom: 1px;
+            font-size: 5.5pt;
+            margin-bottom: 0.5mm;
         }
         .label-harga {
+            font-size: 8pt;
             font-weight: bold;
-            font-size: 11px;
-            color: #000;
-        }
-        .empty-cell {
-            border: 0.5px dashed #9a9898;
-            background: transparent;
         }
     </style>
 </head>
@@ -68,18 +53,16 @@
         $barangIndex   = 0;
     @endphp
 
-    <table cellspacing="0" cellpadding="0">
+    <table>
         @for($row = 0; $row < $rows; $row++)
             <tr>
                 @for($col = 0; $col < $cols; $col++)
                     @php $currentPosition = ($row * $cols) + $col; @endphp
 
                     @if($currentPosition < $startPosition)
-                        {{-- Cell kosong sebelum posisi mulai --}}
-                        <td class="empty-cell"></td>
+                        <td></td>
 
                     @elseif($barangIndex < count($barang))
-                        {{-- Cell berisi data barang --}}
                         <td>
                             <div class="label-id">{{ $barang[$barangIndex]->id_barang }}</div>
                             <div class="label-nama">{{ \Illuminate\Support\Str::limit($barang[$barangIndex]->nama, 25) }}</div>
@@ -89,8 +72,7 @@
                         </td>
 
                     @else
-                        {{-- Cell kosong setelah data habis --}}
-                        <td class="empty-cell"></td>
+                        <td></td>
                     @endif
 
                 @endfor

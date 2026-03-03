@@ -10,7 +10,6 @@
 
 @push('styles')
 <style>
-    /* ── Fix DataTables agar sesuai template Purple ── */
     #barangTable_wrapper .dataTables_length,
     #barangTable_wrapper .dataTables_filter {
         margin-bottom: 12px;
@@ -161,10 +160,8 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-    console.log("Script Barang Ready");
 
-    // ── Inisialisasi DataTable ─────────────────────────────────────────────
-    const table = $('#barangTable').DataTable({
+    var table = $('#barangTable').DataTable({
         "language": {
             "search"      : "Cari:",
             "lengthMenu"  : "Tampilkan _MENU_ data",
@@ -184,18 +181,17 @@ $(document).ready(function() {
         "order": [[1, 'asc']]
     });
 
-    // ── Select All Checkbox ────────────────────────────────────────────────
+    // Select All Checkbox
     $('#selectAll').on('click', function() {
-        const rows = table.rows({ 'search': 'applied' }).nodes();
+        var rows = table.rows({ 'search': 'applied' }).nodes();
         $('input.item-checkbox', rows).prop('checked', this.checked);
     });
 
-    // ── Tombol Cetak PDF ───────────────────────────────────────────────────
+    // Tombol Cetak PDF - Form Submission (langsung buka PDF di tab baru)
     $(document).on('click', '#btnCetakPDF', function(e) {
         e.preventDefault();
-        console.log("Tombol Cetak Diklik");
 
-        const checkedIds = [];
+        var checkedIds = [];
         table.$('input.item-checkbox:checked').each(function() {
             checkedIds.push($(this).val());
         });
@@ -205,53 +201,38 @@ $(document).ready(function() {
             return;
         }
 
-        const token = $('meta[name="csrf-token"]').attr('content');
+        var token = $('meta[name="csrf-token"]').attr('content');
         if (!token) {
-            alert('Error: CSRF Token tidak ditemukan di meta tag!');
+            alert('Error: CSRF Token tidak ditemukan!');
             return;
         }
 
-        const startX = $('#start_x').val();
-        const startY = $('#start_y').val();
+        var startX = $('#start_x').val();
+        var startY = $('#start_y').val();
 
         if (startX < 1 || startX > 5 || startY < 1 || startY > 8) {
             alert('Koordinat X harus 1-5 dan Y harus 1-8!');
             return;
         }
 
-        const formData = new FormData();
-        formData.append('_token', token);
-        formData.append('start_x', startX);
-        formData.append('start_y', startY);
-        checkedIds.forEach(id => formData.append('ids[]', id));
-
-        const btn      = $(this);
-        const origHtml = btn.html();
-        btn.prop('disabled', true).html('<i class="mdi mdi-loading mdi-spin"></i> Memproses...');
-
-        fetch('{{ route("barang.print-label") }}', {
-            method : 'POST',
-            body   : formData,
-            headers: { 'X-CSRF-TOKEN': token }
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => {
-                    throw new Error('Server error ' + response.status + ': ' + text);
-                });
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            window.open(url, '_blank');
-            btn.prop('disabled', false).html(origHtml);
-        })
-        .catch(err => {
-            console.error('Error cetak PDF:', err);
-            alert('Gagal cetak PDF!\n\n' + err.message);
-            btn.prop('disabled', false).html(origHtml);
+        // Buat form hidden dan submit ke tab baru
+        var $form = $('<form>', {
+            method: 'POST',
+            action: '{{ route("barang.print-label") }}',
+            target: '_blank'
         });
+
+        $form.append($('<input>', {type:'hidden', name:'_token', value:token}));
+        $form.append($('<input>', {type:'hidden', name:'start_x', value:startX}));
+        $form.append($('<input>', {type:'hidden', name:'start_y', value:startY}));
+
+        checkedIds.forEach(function(id) {
+            $form.append($('<input>', {type:'hidden', name:'ids[]', value:id}));
+        });
+
+        $('body').append($form);
+        $form.submit();
+        $form.remove();
     });
 
 });

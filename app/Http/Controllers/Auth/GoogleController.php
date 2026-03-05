@@ -15,7 +15,8 @@ class GoogleController extends Controller
 {
     //redirect to google
     public function redirectToGoogle()
-    {
+    {   
+        // pakai socialite itu library/package buat login OAuth seperti Google (pihak ke-3)
         /** @var \Laravel\Socialite\Two\GoogleProvider $driver */
         $driver = Socialite::driver('google');
         
@@ -26,6 +27,7 @@ class GoogleController extends Controller
     public function handleGoogleCallback()
     {
         try {
+            //ambil data user dari google
             $googleUser = Socialite::driver('google')->user();
 
             //cari user berdasarkan id_google atau email
@@ -42,7 +44,7 @@ class GoogleController extends Controller
                     'password' => bcrypt(Str::random(16)), //buat password random karena tidak digunakan
                 ]);
             } else {
-                //jika user sudah ada, update id_google kalo belum terisi
+                //Jika user ada tapi id_google kosong, update
                 if (!$user->id_google) {
                     $user->update(['id_google' => $googleUser->getId()]);
                 }
@@ -98,7 +100,7 @@ class GoogleController extends Controller
     {
         $request = request();
 
-        //validasi input
+        //validasi input otp harus 6 karakter
         $request->validate([
             'otp' => 'required|string|size:6',
         ]);
@@ -111,6 +113,7 @@ class GoogleController extends Controller
                         ->with('error', 'Session expired. Silakan login ulang.');
         }
 
+        // cari user di database
         $user = User::find($userId);
 
         if (!$user) {
@@ -145,7 +148,8 @@ class GoogleController extends Controller
 
     //resend OTP
     public function resendOtp()
-    {        //ambil user_id dari session
+    {   
+        //ambil user_id dari session
         $userId = session('otp_user_id');   
 
         if (!$userId) {

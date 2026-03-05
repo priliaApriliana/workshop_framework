@@ -36,6 +36,7 @@ class User extends Authenticatable
         'otp',
     ];
 
+    //cast itu karena laravel kan mau mengcasting atau mengubah tipe data yang nanti digunakan di model
     /**
      * Get the attributes that should be cast.
      *

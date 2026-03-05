@@ -1,3 +1,4 @@
+```php
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,12 +6,12 @@
     <title>Label Harga</title>
     <style>
         @page {
-            size: A4 portrait;
-            margin: 5mm;
+        size: A4 portrait;
+        margin: 5mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; }
-        table {
+        table {           
             width: 200mm;
             border-collapse: collapse;
             table-layout: fixed;
@@ -21,16 +22,16 @@
             text-align: center;
             vertical-align: middle;
             /* top right bottom left */
-            padding: 2.7mm 1mm 0 11mm; 
+            padding: 2.7mm 1mm 0 11mm;
+            font-weight: bold;
+            color: #000;
         }
         .label-id {
             font-size: 6pt;
-            font-weight: bold;
             margin-bottom: 1mm;
         }
         .label-nama {
             font-size: 6pt;
-            font-weight: bold;
             margin-bottom: 1mm;
             word-break: break-word;
             line-height: 1.2;
@@ -41,7 +42,6 @@
         }
         .label-harga {
             font-size: 8pt;
-            font-weight: bold;
         }
     </style>
 </head>

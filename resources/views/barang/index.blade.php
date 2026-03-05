@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Data Barang')
 @section('icon', 'mdi-package-variant')
@@ -142,14 +142,14 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">
                                             <i class="mdi mdi-delete"></i>
-                                        </button>
+                                        </button> 
                                     </form>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                </div>  
 
             </div>
         </div>
@@ -215,7 +215,7 @@ $(document).ready(function() {
             return;
         }
 
-        // Buat form hidden dan submit ke tab baru
+        // form hidden dan submit ke tab baru
         var $form = $('<form>', {
             method: 'POST',
             action: '{{ route("barang.print-label") }}',

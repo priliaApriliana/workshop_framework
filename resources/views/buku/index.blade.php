@@ -58,10 +58,10 @@
                                 <a href="{{ route('buku.edit', $b->idbuku) }}" class="btn btn-gradient-warning btn-sm">
                                     <i class="mdi mdi-pencil"></i>
                                 </a>
-                                <form action="{{ route('buku.destroy', $b->idbuku) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
+                                <form action="{{ route('buku.destroy', $b->idbuku) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-gradient-danger btn-sm">
+                                    <button type="button" class="btn btn-gradient-danger btn-sm" onclick="deleteWithSpinner(this)">
                                         <i class="mdi mdi-delete"></i>
                                     </button>
                                 </form>

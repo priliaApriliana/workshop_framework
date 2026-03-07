@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -27,22 +27,30 @@ Route::post('/otp/resend', [GoogleController::class, 'resendOtp'])->name('otp.re
 // =====================
 Route::middleware('auth')->group(function () {
 
-    // ── Dashboard ────────────────────────────────────────────────────────────
+    // Dashboard
     Route::get('/', fn () => view('home'))->name('home');
     Route::get('/home', fn () => redirect()->route('home'));
 
-    // ── Kategori (CRUD) ───────────────────────────────────────────────────────
+    // Kategori (CRUD)
     Route::resource('kategori', KategoriController::class);
 
-    // ── Buku (CRUD) ───────────────────────────────────────────────────────────
+    // Buku (CRUD) 
     Route::resource('buku', BukuController::class);
 
-    // ── Barang (CRUD + Print Label) ───────────────────────────────────────────
+    // Barang (CRUD + Print Label) 
     // Print label harus didaftarkan SEBELUM resource agar tidak bentrok dengan {barang}
     Route::post('/barang/print-label', [BarangController::class, 'printLabel'])->name('barang.print-label');
     Route::resource('barang', BarangController::class);
 
-    // ── PDF Generator ─────────────────────────────────────────────────────────
+
+    // -- Select Kota (Client-side only) --
+    Route::get('/select-kota', fn () => view('select_kota.index'))->name('select-kota.index');
+
+    // -- Barang JS (Client-side only, no DB) --
+    Route::get('/barang-js/html-table', fn () => view('barang_js.html_table'))->name('barang-js.html-table');
+    Route::get('/barang-js/datatable', fn () => view('barang_js.datatable'))->name('barang-js.datatable');
+
+    //PDF Generator 
     Route::prefix('pdf')->group(function () {
         Route::get('/sertifikat', [PdfController::class, 'sertifikatForm'])->name('pdf.sertifikat.form');
         Route::get('/sertifikat/download', [PdfController::class, 'generateSertifikat'])->name('pdf.sertifikat.generate');

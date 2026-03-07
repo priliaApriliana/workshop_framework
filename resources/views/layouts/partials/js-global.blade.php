@@ -28,3 +28,47 @@
     });
 </script>
 
+{{-- SPINNER SUBMIT HANDLER --}}
+<script>
+    function submitWithSpinner(btn) {
+        var form = btn.closest('form');
+        if (!form) return;
+
+        // Cek HTML5 validity
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Simpan teks asli button
+        var originalHTML = btn.innerHTML;
+
+        // Disable button & tampilkan spinner
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memproses...';
+
+        // Submit form via JavaScript
+        form.submit();
+    }
+
+    /**
+     * Handle delete form dengan konfirmasi + spinner
+     */
+    function deleteWithSpinner(btn) {
+        var form = btn.closest('form');
+        if (!form) return;
+
+        // Konfirmasi hapus
+        if (!confirm('Yakin hapus data ini?')) {
+            return;
+        }
+
+        // Disable button & tampilkan spinner
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+
+        // Submit form via JavaScript
+        form.submit();
+    }
+</script>
+

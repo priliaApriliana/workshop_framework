@@ -29,6 +29,20 @@
     }
 </style>
 
+{{-- Spinner Button CSS --}}
+<style>
+    .btn-spinner .spinner-border {
+        width: 1rem;
+        height: 1rem;
+        border-width: 0.15em;
+        vertical-align: middle;
+    }
+    button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+</style>
+
 {{-- Favicon --}}
 <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
 

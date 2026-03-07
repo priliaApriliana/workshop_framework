@@ -137,12 +137,12 @@
                                         <i class="mdi mdi-pencil"></i>
                                     </a>
                                     <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST"
-                                          class="d-inline" onsubmit="return confirm('Yakin hapus barang ini?')">
+                                        class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteWithSpinner(this)">
                                             <i class="mdi mdi-delete"></i>
-                                        </button> 
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

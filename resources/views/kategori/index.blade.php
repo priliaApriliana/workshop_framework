@@ -49,10 +49,10 @@
                                 <a href="{{ route('kategori.edit', $kat->idkategori) }}" class="btn btn-gradient-warning btn-sm">
                                     <i class="mdi mdi-pencil"></i>
                                 </a>
-                                <form action="{{ route('kategori.destroy', $kat->idkategori) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
+                                <form action="{{ route('kategori.destroy', $kat->idkategori) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-gradient-danger btn-sm">
+                                    <button type="button" class="btn btn-gradient-danger btn-sm" onclick="deleteWithSpinner(this)">
                                         <i class="mdi mdi-delete"></i>
                                     </button>
                                 </form>

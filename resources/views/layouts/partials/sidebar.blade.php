@@ -1,4 +1,4 @@
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
+﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         {{-- Profile Section --}}
         <li class="nav-item nav-profile">
@@ -44,6 +44,37 @@
             <a class="nav-link" href="{{ route('barang.index') }}">
                 <span class="menu-title">Barang</span>
                 <i class="mdi mdi-package-variant menu-icon"></i>
+            </a>
+        </li>
+
+        {{-- Menu Barang JS --}}
+        <li class="nav-item {{ request()->is('barang-js*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#barang-js-menu" aria-expanded="{{ request()->is('barang-js*') ? 'true' : 'false' }}" aria-controls="barang-js-menu">
+                <span class="menu-title">Barang JS</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-code-tags menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->is('barang-js*') ? 'show' : '' }}" id="barang-js-menu">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('barang-js/html-table') ? 'active' : '' }}" href="{{ route('barang-js.html-table') }}">
+                            <i class="mdi mdi-table text-info me-2"></i> HTML Table
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('barang-js/datatable') ? 'active' : '' }}" href="{{ route('barang-js.datatable') }}">
+                            <i class="mdi mdi-table-large text-success me-2"></i> DataTable
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        {{-- Menu Select Kota --}}
+        <li class="nav-item {{ request()->is('select-kota*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('select-kota.index') }}">
+                <span class="menu-title">Select Kota</span>
+                <i class="mdi mdi-city menu-icon"></i>
             </a>
         </li>
 

@@ -43,10 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('barang', BarangController::class);
 
 
-    // -- Select Kota (Client-side only) --
+    // Select Kota (Client-side only) --
     Route::get('/select-kota', fn () => view('select_kota.index'))->name('select-kota.index');
 
-    // -- Barang JS (Client-side only, no DB) --
+    // Barang JS (Client-side only, no DB) --
     Route::get('/barang-js/html-table', fn () => view('barang_js.html_table'))->name('barang-js.html-table');
     Route::get('/barang-js/datatable', fn () => view('barang_js.datatable'))->name('barang-js.datatable');
 

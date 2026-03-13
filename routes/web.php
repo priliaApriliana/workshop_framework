@@ -57,5 +57,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/undangan', [PdfController::class, 'undanganForm'])->name('pdf.undangan.form');
         Route::get('/undangan/download', [PdfController::class, 'generateUndangan'])->name('pdf.undangan.generate');
     });
+    
+    // Wilayah (Cascading Select)
+    Route::get('/wilayah', [App\Http\Controllers\WilayahController::class, 'index'])->name('wilayah.index');
+    Route::get('/wilayah/provinsi', [App\Http\Controllers\WilayahController::class, 'getProvinsi'])->name('wilayah.provinsi');
+    Route::get('/wilayah/kota/{provinsi_id}', [App\Http\Controllers\WilayahController::class, 'getKota'])->name('wilayah.kota');
+    Route::get('/wilayah/kecamatan/{kota_id}', [App\Http\Controllers\WilayahController::class, 'getKecamatan'])->name('wilayah.kecamatan');
+    Route::get('/wilayah/kelurahan/{kecamatan_id}', [App\Http\Controllers\WilayahController::class, 'getKelurahan'])->name('wilayah.kelurahan');
+
+    // POS (Point of Sales)
+    Route::get('/pos', [App\Http\Controllers\PosController::class, 'index'])->name('pos.index');
+    Route::get('/pos/barang/{kode}', [App\Http\Controllers\PosController::class, 'cariBarang'])->name('pos.cari-barang');
+    Route::post('/pos/simpan', [App\Http\Controllers\PosController::class, 'simpan'])->name('pos.simpan');
 
 });

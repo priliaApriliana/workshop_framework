@@ -156,9 +156,7 @@ $(document).ready(function() {
     });
 });
 
-// ========================
 // CARD 1: Select Biasa
-// ========================
 function tambahKota1(btn) {
     var input = document.getElementById('inputKota1');
     var kota = input.value.trim();

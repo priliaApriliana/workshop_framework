@@ -32,7 +32,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="button" class="btn btn-gradient-primary me-2" onclick="submitWithSpinner(this)">Simpan</button>
+                    <button type="button" class="btn btn-gradient-primary me-2" onclick="submitWithSpinner(this)">Submit</button>
                     <a href="{{ route('barang.index') }}" class="btn btn-light">Batal</a>
                 </form>
             </div>

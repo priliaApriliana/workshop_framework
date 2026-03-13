@@ -43,7 +43,7 @@
         // Simpan teks asli button
         var originalHTML = btn.innerHTML;
 
-        // Disable button & tampilkan spinner
+        // Disable button dan buat nampilin spinner
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memproses...';
 
@@ -51,9 +51,7 @@
         form.submit();
     }
 
-    /**
-     * Handle delete form dengan konfirmasi + spinner
-     */
+    // Handle delete form dengan konfirmasi + spinner
     function deleteWithSpinner(btn) {
         var form = btn.closest('form');
         if (!form) return;
@@ -63,7 +61,7 @@
             return;
         }
 
-        // Disable button & tampilkan spinner
+        // Disable button dan buat nampilin spinner
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 

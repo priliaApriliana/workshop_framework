@@ -78,6 +78,22 @@
             </a>
         </li>
 
+        {{-- Menu Wilayah --}}
+        <li class="nav-item {{ request()->is('wilayah*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('wilayah.index') }}">
+                <span class="menu-title">Wilayah</span>
+                <i class="mdi mdi-map-marker menu-icon"></i>
+            </a>
+        </li>
+
+        {{-- Menu POS --}}
+        <li class="nav-item {{ request()->is('pos*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('pos.index') }}">
+                <span class="menu-title">Point of Sales</span>
+                <i class="mdi mdi-cart menu-icon"></i>
+            </a>
+        </li>
+
         {{-- Menu PDF Generator --}}
         <li class="nav-item {{ request()->is('pdf*') ? 'active' : '' }}">
             <a class="nav-link" data-bs-toggle="collapse" href="#pdf-menu" aria-expanded="{{ request()->is('pdf*') ? 'true' : 'false' }}" aria-controls="pdf-menu">

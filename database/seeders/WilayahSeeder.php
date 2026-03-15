@@ -10,16 +10,16 @@ class WilayahSeeder extends Seeder
 {
     public function run()
     {
-        // Disable FK checks for PostgreSQL
+        // Menonaktifkan pengecekan Foreign Key untuk PostgreSQL
         DB::statement('SET session_replication_role = replica;');
 
-        // Truncate existing data (in reverse order of dependencies)
+        // Menghapus (truncate) data yang sudah ada (dalam urutan terbalik dari dependensinya)
         DB::table('kelurahan')->truncate();
         DB::table('kecamatan')->truncate();
         DB::table('kota')->truncate();
         DB::table('provinsi')->truncate();
 
-        // Re-enable FK checks
+        // Mengaktifkan kembali pengecekan Foreign Key
         DB::statement('SET session_replication_role = DEFAULT;');
 
         $this->command->info('Importing provinces...');

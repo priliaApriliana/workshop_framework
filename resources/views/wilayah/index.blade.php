@@ -163,14 +163,12 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-// ============================================================
 // CARD 1: AJAX
-// ============================================================
 $(document).ready(function() {
     // Load Provinsi saat halaman dibuka
     loadProvinsiAjax();
 
-    // Event: Provinsi berubah
+    // Event handler: Provinsi berubah
     $('#provinsi1').on('change', function() {
         const provinsiId = $(this).val();
         const provinsiNama = $(this).find('option:selected').text();
@@ -330,9 +328,7 @@ function loadKelurahanAjax(kecamatanId) {
     });
 }
 
-// ============================================================
 // CARD 2: AXIOS
-// ============================================================
 document.addEventListener('DOMContentLoaded', function() {
     // Load Provinsi saat halaman dibuka
     loadProvinsiAxios();
@@ -504,9 +500,7 @@ function loadKelurahanAxios(kecamatanId) {
         });
 }
 
-// ============================================================
 // HELPER FUNCTIONS
-// ============================================================
 
 // Reset select (jQuery version)
 function resetSelect(selector) {

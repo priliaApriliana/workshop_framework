@@ -237,17 +237,15 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-// ============================================================
+
 // GLOBAL VARIABLES
-// ============================================================
 let cartAjax = []; // Keranjang untuk AJAX
 let cartAxios = []; // Keranjang untuk Axios
 let currentBarangAjax = null; // Data barang saat ini (AJAX)
 let currentBarangAxios = null; // Data barang saat ini (Axios)
 
-// ============================================================
+
 // CARD 1: AJAX VERSION
-// ============================================================
 $(document).ready(function() {
     // Event: Enter pada input kode barang
     $('#kodeBarang1').on('keypress', function(e) {
@@ -498,9 +496,9 @@ function simpanTransaksiAjax(btn, total) {
     });
 }
 
-// ============================================================
+
 // CARD 2: AXIOS VERSION
-// ============================================================
+
 document.addEventListener('DOMContentLoaded', function() {
     // Event: Enter pada input kode barang
     document.getElementById('kodeBarang2').addEventListener('keypress', function(e) {
@@ -745,9 +743,9 @@ function simpanTransaksiAxios(btn, total) {
     });
 }
 
-// ============================================================
+
 // HELPER FUNCTIONS
-// ============================================================
+
 function formatRupiah(angka) {
     return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }

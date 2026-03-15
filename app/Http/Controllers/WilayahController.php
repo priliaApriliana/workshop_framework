@@ -18,7 +18,10 @@ class WilayahController extends Controller
     // AJAX: Get Provinsi
     public function getProvinsi()
     {
-        $provinsi = Provinsi::query()->orderBy('nama')->get();
+        $provinsi = Provinsi::query()
+            ->orderBy('nama')
+            ->get();
+            
         return response()->json($provinsi);
     }
 

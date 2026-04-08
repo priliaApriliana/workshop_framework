@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +46,12 @@ Route::post('/midtrans/callback', [CustomerOrderController::class, 'midtransCall
 // =====================
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', fn () => view('home'))->name('home');
+    Route::get('/dashboard', function () {
+        if (Auth::user()->isVendor()) {
+            return redirect()->route('vendor.dashboard');
+        }
+        return view('home');
+    })->name('home');
     Route::get('/home', fn () => redirect()->route('home'));
 
     Route::resource('kategori', KategoriController::class);

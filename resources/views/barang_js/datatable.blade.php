@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Barang JS - DataTable')
 @section('icon', 'mdi-package-variant')

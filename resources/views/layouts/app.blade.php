@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 {{-- ========================================== --}}
 {{-- HEADER (termasuk meta tags & style global) --}}

@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Tambah Kategori')
 @section('icon', 'mdi-folder-plus')

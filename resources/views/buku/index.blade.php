@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Daftar Buku')
 @section('icon', 'mdi-book-open-page-variant')

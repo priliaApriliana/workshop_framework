@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,37 +10,22 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
         'id_google',
         'otp',
         'otp_expires_at',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
         'otp',
     ];
 
-    //cast itu karena laravel kan mau mengcasting atau mengubah tipe data yang nanti digunakan di model
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -49,5 +33,29 @@ class User extends Authenticatable
             'password' => 'hashed',
             'otp_expires_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Cek apakah user ini Admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Cek apakah user ini Vendor
+     */
+    public function isVendor(): bool
+    {
+        return $this->role === 'vendor';
+    }
+
+    /**
+     * Relasi: User punya 1 Vendor (jika role = vendor)
+     */
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class, 'id_user', 'id');
     }
 }

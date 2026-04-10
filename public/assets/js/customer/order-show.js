@@ -43,6 +43,11 @@
   qtyInputs.forEach((input) => input.addEventListener('input', buildCart));
 
   btnOrder.addEventListener('click', async () => {
+    // Show spinner loading state
+    const originalContent = btnOrder.innerHTML;
+    btnOrder.disabled = true;
+    btnOrder.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Memproses...';
+
     try {
       const form = document.getElementById('order-form');
       const response = await fetch(cfg.storeUrl, {
@@ -54,6 +59,8 @@
       const data = await response.json();
       if (!response.ok || !data.success) {
         Swal.fire('Gagal', data.message || 'Gagal membuat pesanan', 'error');
+        btnOrder.disabled = false;
+        btnOrder.innerHTML = originalContent;
         return;
       }
 
@@ -61,6 +68,8 @@
       window.location.href = cfg.paymentBaseUrl + '/' + data.id_pesanan + '/payment';
     } catch {
       Swal.fire('Error', 'Terjadi kesalahan saat memproses pesanan', 'error');
+      btnOrder.disabled = false;
+      btnOrder.innerHTML = originalContent;
     }
   });
 })();

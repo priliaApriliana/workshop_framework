@@ -1,7 +1,6 @@
-﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         {{-- Profile Section --}}
-
         @auth
         <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
@@ -20,7 +19,10 @@
 
         {{-- CUSTOMER (PUBLIC) --}}
         @if(!Auth::check())
-        <li class="nav-item {{ request()->is('customer/order*') ? 'active' : '' }}">
+        <li class="nav-item nav-category">
+            <span class="nav-link">PUBLIC AREA</span>
+        </li>
+        <li class="nav-item {{ request()->is('customer/order*') && !request()->is('customer/order/*/payment') && !request()->is('customer/order/*/status') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('customer.order.index') }}">
                 <span class="menu-title">Customer Order</span>
                 <i class="mdi mdi-storefront menu-icon"></i>
@@ -38,12 +40,14 @@
                 <i class="mdi mdi-check-circle-outline menu-icon"></i>
             </a>
         </li>
-
         @endif
 
         @auth
         {{-- MENU KHUSUS ADMIN --}}
         @if(Auth::user()->isAdmin())
+        <li class="nav-item nav-category">
+            <span class="nav-link">📚 Modul Koleksi Buku</span>
+        </li>
         <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <span class="menu-title">Admin Dashboard</span>
@@ -96,12 +100,12 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('pdf/sertifikat*') ? 'active' : '' }}" href="{{ route('pdf.sertifikat.form') }}">
-                            <i class="mdi mdi-certificate text-warning me-2"></i> Sertifikat
+                            Sertifikat
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('pdf/undangan*') ? 'active' : '' }}" href="{{ route('pdf.undangan.form') }}">
-                            <i class="mdi mdi-email-outline text-info me-2"></i> Undangan
+                            Undangan
                         </a>
                     </li>
                 </ul>
@@ -112,7 +116,7 @@
         {{-- KHUSUS VENDOR --}}
         @if(Auth::user()->isVendor() || Auth::user()->isAdmin())
         <li class="nav-item nav-category">
-            <span class="nav-link">Vendor Area</span>
+            <span class="nav-link">🍽️ Modul Sistem Kantin</span>
         </li>
         <li class="nav-item {{ request()->is('vendor/dashboard') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('vendor.dashboard') }}">
@@ -142,8 +146,3 @@
         @endauth
     </ul>
 </nav>
-
-
-
-
-

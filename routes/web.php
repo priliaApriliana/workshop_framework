@@ -47,7 +47,9 @@ Route::post('/midtrans/callback', [CustomerOrderController::class, 'midtransCall
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
-        if (Auth::user()->isVendor()) {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($user->isVendor()) {
             return redirect()->route('vendor.dashboard');
         }
         return view('home');

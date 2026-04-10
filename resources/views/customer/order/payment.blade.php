@@ -120,6 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!btnPay) return;
 
     btnPay.addEventListener('click', function() {
+        // Show spinner loading state
+        const originalContent = btnPay.innerHTML;
+        btnPay.disabled = true;
+        btnPay.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Memproses Pembayaran...';
+
         // Buka popup Midtrans Snap
         window.snap.pay('{{ $snapToken }}', {
             onSuccess: function(result) {
@@ -132,9 +137,13 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             onError: function(result) {
                 Swal.fire('Gagal', 'Pembayaran gagal. Silakan coba lagi.', 'error');
+                btnPay.disabled = false;
+                btnPay.innerHTML = originalContent;
             },
             onClose: function() {
                 Swal.fire('Info', 'Pembayaran belum selesai. Anda bisa klik tombol bayar lagi.', 'info');
+                btnPay.disabled = false;
+                btnPay.innerHTML = originalContent;
             }
         });
     });

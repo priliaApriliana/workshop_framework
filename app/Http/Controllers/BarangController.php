@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Picqer\Barcode\BarcodeGeneratorSVG;
 
 class BarangController extends Controller
 {
@@ -91,7 +92,16 @@ class BarangController extends Controller
             ], 422);
         }
 
-        $pdf = Pdf::loadView('barang.print-label', compact('barang', 'startX', 'startY'))
+        $generator = new BarcodeGeneratorSVG();
+        $barcodes = [];
+        foreach ($barang as $item) {
+            $barcodes[$item->id_barang] = $generator->getBarcode(
+                (string) $item->id_barang,
+                $generator::TYPE_CODE_128
+            );
+        }
+
+        $pdf = Pdf::loadView('barang.print-label', compact('barang', 'startX', 'startY', 'barcodes'))
                   ->setPaper('a4', 'portrait');
 
         return $pdf->stream('label-harga.pdf');

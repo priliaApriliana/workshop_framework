@@ -43,6 +43,11 @@
         .label-harga {
             font-size: 8pt;
         }
+        .label-barcode svg {
+            width: 30mm;
+            height: 8mm;
+            margin-bottom: 0.5mm;
+        }
     </style>
 </head>
 <body>
@@ -64,6 +69,7 @@
 
                     @elseif($barangIndex < count($barang))
                         <td>
+                            <div class="label-barcode">{!! $barcodes[$barang[$barangIndex]->id_barang] !!}</div>
                             <div class="label-id">{{ $barang[$barangIndex]->id_barang }}</div>
                             <div class="label-nama">{{ \Illuminate\Support\Str::limit($barang[$barangIndex]->nama, 25) }}</div>
                             <div class="label-harga-text">Harga</div>

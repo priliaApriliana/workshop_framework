@@ -111,6 +111,19 @@
                     </table>
                 @endif
 
+                {{-- Tampilkan QR Code hanya jika sudah lunas --}}
+                @if($pesanan->status_bayar == 1 && $qrBase64)
+                    <div class="text-center mt-4">
+                        <p class="fw-bold">QR Code Pesanan Anda:</p>
+                        <img src="data:image/png;base64,{{ $qrBase64 }}"
+                            alt="QR Code"
+                            style="width:180px; height:180px; border:1px solid #ddd; padding:5px; border-radius:8px;">
+                        <p class="text-muted mt-1" style="font-size:12px;">
+                            ID Pesanan: <strong>{{ $pesanan->id_pesanan }}</strong>
+                        </p>
+                    </div>
+                @endif
+
                 {{-- Tombol Aksi --}}
                 <div class="mt-3">
                     @if($pesanan->status_bayar == 0)

@@ -26,10 +26,8 @@ class CustomerOrderController extends Controller
         MidtransConfig::$is3ds = config('midtrans.is_3ds');
     }
 
-    /**
-     * Generate nama customer otomatis: Guest_000001, Guest_000002, dst.
-     * Tanpa konflik (mengambil nomor terakhir + 1)
-     */
+    // Generate nama customer otomatis: Guest_000001, Guest_000002, dst.
+    // Tanpa konflik (mengambil nomor terakhir + 1)
     private function generateGuestName(): string
     {
         $lastGuest = Pesanan::where('nama_customer', 'like', 'Guest_%')
@@ -47,20 +45,16 @@ class CustomerOrderController extends Controller
         return 'Guest_' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * Halaman utama customer: Pilih Vendor
-     * PUBLIC - tanpa login
-     */
+    //  Halaman utama customer: Pilih Vendor
+    //  PUBLIC - tanpa login
     public function index()
     {
         $vendors = Vendor::withCount('menus')->get();
         return view('customer.order.index', compact('vendors'));
     }
 
-    /**
-     * Tampilkan menu berdasarkan vendor yang dipilih
-     * SELECT BERJENJANG: Customer pilih vendor → muncul menu vendor tsb
-     */
+    // Tampilkan menu berdasarkan vendor yang dipilih
+    // SELECT BERJENJANG: Customer pilih vendor → muncul menu vendor tsb
     public function show($id_vendor)
     {
         $vendor = Vendor::findOrFail($id_vendor);
@@ -69,10 +63,8 @@ class CustomerOrderController extends Controller
         return view('customer.order.show', compact('vendor', 'menus'));
     }
 
-    /**
-     * Buat pesanan + Generate Guest user otomatis
-     * Setelah order dibuat → redirect ke halaman pembayaran
-     */
+    // Buat pesanan + Generate Guest user otomatis
+    // Setelah order dibuat → redirect ke halaman pembayaran
     public function store(Request $request)
     {
         $request->validate([
@@ -146,10 +138,8 @@ class CustomerOrderController extends Controller
         }
     }
 
-    /**
-     * Halaman Pembayaran: Buat Snap Token Midtrans
-     * Customer bayar via VA atau QRIS
-     */
+    // Halaman Pembayaran: Buat Snap Token Midtrans
+    // Customer bayar via VA atau QRIS
     public function payment($id_pesanan)
     {
         $pesanan = Pesanan::with('detailPesanans.menu')->findOrFail($id_pesanan);
@@ -208,18 +198,14 @@ class CustomerOrderController extends Controller
         return view('customer.order.payment', compact('pesanan', 'snapToken', 'clientKey'));
     }
 
-    /**
-     * Halaman Status Pesanan
-     */
+    // Halaman Status Pesanan
     public function status($id_pesanan)
     {
         $pesanan = Pesanan::with(['detailPesanans.menu', 'payments'])->findOrFail($id_pesanan);
         return view('customer.order.status', compact('pesanan'));
     }
 
-    /**
-     * Update status pembayaran dari client-side (setelah Snap callback)
-     */
+    //  * Update status pembayaran dari client-side (setelah Snap callback)
     public function updateStatus(Request $request, $id_pesanan)
     {
         $pesanan = Pesanan::findOrFail($id_pesanan);
@@ -267,10 +253,8 @@ class CustomerOrderController extends Controller
         ]);
     }
 
-    /**
-     * Cek status pembayaran langsung ke Midtrans API
-     * Digunakan saat customer klik "Cek Pembayaran"
-     */
+    //  * Cek status pembayaran langsung ke Midtrans API
+    //  * Digunakan saat customer klik "Cek Pembayaran"
     public function checkPaymentStatus($id_pesanan)
     {
         $pesanan = Pesanan::findOrFail($id_pesanan);
@@ -339,10 +323,8 @@ class CustomerOrderController extends Controller
         }
     }
 
-    /**
-     * Midtrans Webhook / Callback (server-to-server)
-     * Route tanpa CSRF (sudah dikecualikan di bootstrap/app.php)
-     */
+    //  * Midtrans Webhook / Callback (server-to-server)
+    //  * Route tanpa CSRF (sudah dikecualikan di bootstrap/app.php)
     public function midtransCallback(Request $request)
     {
         try {

@@ -9,6 +9,19 @@
 <li class="breadcrumb-item active">Pesanan Lunas</li>
 @endsection
 
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-nav-spinner').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            btn.classList.add('disabled');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memuat...';
+        });
+    });
+});
+</script>
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
@@ -35,7 +48,7 @@
                                     <td>Rp {{ number_format($pesanan->total, 0, ',', '.') }}</td>
                                     <td>{{ $pesanan->created_at->format('d M Y H:i') }}</td>
                                     <td>
-                                        <a href="{{ route('vendor.detail-pesanan', $pesanan->id_pesanan) }}" class="btn btn-sm btn-info">
+                                        <a href="{{ route('vendor.detail-pesanan', $pesanan->id_pesanan) }}" class="btn btn-sm btn-info btn-nav-spinner">
                                             <i class="mdi mdi-eye"></i> Detail
                                         </a>
                                     </td>

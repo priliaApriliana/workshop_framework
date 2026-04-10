@@ -63,7 +63,7 @@
                         <input type="file" name="gambar" class="form-control">
                     </div>
 
-                    <button class="btn btn-primary" type="submit">Simpan</button>
+                    <button class="btn btn-primary" type="button" onclick="submitWithSpinner(this)">Simpan</button>
                     <a href="{{ route('vendor.menu.index') }}" class="btn btn-secondary">Kembali</a>
                 </form>
             </div>

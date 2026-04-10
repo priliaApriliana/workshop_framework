@@ -58,10 +58,10 @@
                                         <a href="{{ route('vendor.menu.edit', $menu->id_menu) }}" class="btn btn-sm btn-warning">
                                             <i class="mdi mdi-pencil"></i>
                                         </a>
-                                        <form action="{{ route('vendor.menu.destroy', $menu->id_menu) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Hapus menu ini?')">
+                                        <form action="{{ route('vendor.menu.destroy', $menu->id_menu) }}" method="POST" style="display:inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteWithSpinner(this)"><i class="mdi mdi-delete"></i></button>
                                         </form>
                                     </td>
                                 </tr>

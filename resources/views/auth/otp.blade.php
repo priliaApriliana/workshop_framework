@@ -86,7 +86,7 @@
                                     @enderror
                                 </div>
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">
+                                    <button type="button" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" onclick="submitOtpWithSpinner(this)">
                                         VERIFIKASI
                                     </button>
                                 </div>
@@ -96,7 +96,7 @@
                                 <p class="text-muted">Tidak menerima kode?</p>
                                 <form method="POST" action="{{ route('otp.resend') }}" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-link text-primary p-0">Kirim Ulang OTP</button>
+                                    <button type="button" class="btn btn-link text-primary p-0" onclick="resendOtpWithSpinner(this)">Kirim Ulang OTP</button>
                                 </form>
                             </div>
 
@@ -120,6 +120,23 @@
         document.getElementById('otp').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
+
+        function submitOtpWithSpinner(btn) {
+            var form = btn.closest('form');
+            if (!form) return;
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> MEMVERIFIKASI...';
+            form.submit();
+        }
+
+        function resendOtpWithSpinner(btn) {
+            var form = btn.closest('form');
+            if (!form) return;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...';
+            form.submit();
+        }
     </script>
 </body>
 </html>

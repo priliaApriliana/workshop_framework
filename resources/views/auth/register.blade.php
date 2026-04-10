@@ -57,7 +57,7 @@
                                         id="password-confirm" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
                                 </div>
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">SIGN UP</button>
+                                    <button type="button" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" onclick="submitRegisterWithSpinner(this)">SIGN UP</button>
                                 </div>
                                 <div class="text-center mt-4 font-weight-light">
                                     Already have an account? <a href="{{ route('login') }}" class="text-primary">Login</a>
@@ -73,5 +73,15 @@
     <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
     <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
     <script src="{{ asset('assets/js/misc.js') }}"></script>
+    <script>
+        function submitRegisterWithSpinner(btn) {
+            var form = btn.closest('form');
+            if (!form) return;
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> SIGNING UP...';
+            form.submit();
+        }
+    </script>
 </body>
 </html>

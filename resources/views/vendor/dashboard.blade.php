@@ -65,13 +65,13 @@
             <div class="card-body">
                 <h4 class="card-title">Aksi Cepat Vendor</h4>
                 <div class="d-flex flex-wrap">
-                    <a href="{{ route('vendor.menu.create') }}" class="btn btn-outline-success btn-icon-text mt-2 mr-2">
+                    <a href="{{ route('vendor.menu.create') }}" class="btn btn-outline-success btn-icon-text mt-2 mr-2 btn-nav-spinner">
                         <i class="mdi mdi-plus-box btn-icon-prepend"></i> Tambah Menu Baru
                     </a>
-                    <a href="{{ route('vendor.menu.index') }}" class="btn btn-outline-primary btn-icon-text mt-2 mr-2">
+                    <a href="{{ route('vendor.menu.index') }}" class="btn btn-outline-primary btn-icon-text mt-2 mr-2 btn-nav-spinner">
                         <i class="mdi mdi-food-fork-drink btn-icon-prepend"></i> Lihat List Menu
                     </a>
-                    <a href="{{ route('vendor.lunas-pesanan') }}" class="btn btn-gradient-success btn-icon-text mt-2">
+                    <a href="{{ route('vendor.lunas-pesanan') }}" class="btn btn-gradient-success btn-icon-text mt-2 btn-nav-spinner">
                         <i class="mdi mdi-receipt btn-icon-prepend"></i> Cek Order Masuk
                     </a>
                 </div>
@@ -81,3 +81,16 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-nav-spinner').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            btn.classList.add('disabled');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memuat...';
+        });
+    });
+});
+</script>
+@endpush

@@ -56,7 +56,7 @@
                     </table>
                 </div>
 
-                <a href="{{ route('vendor.lunas-pesanan') }}" class="btn btn-secondary">
+                <a href="{{ route('vendor.lunas-pesanan') }}" class="btn btn-secondary btn-nav-spinner">
                     <i class="mdi mdi-arrow-left"></i> Kembali
                 </a>
             </div>
@@ -64,3 +64,16 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-nav-spinner').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            btn.classList.add('disabled');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memuat...';
+        });
+    });
+});
+</script>
+@endpush

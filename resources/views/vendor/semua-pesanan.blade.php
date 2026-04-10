@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Daftar Semua Pesanan')
 @section('icon', 'mdi-cash-check')
@@ -35,7 +35,7 @@
                                     <td>Rp {{ number_format($pesanan->total, 0, ',', '.') }}</td>
                                     <td>{{ $pesanan->created_at->format('d M Y H:i') }}</td>
                                     <td>
-                                        <a href="{{ route('vendor.detail-pesanan', $pesanan->id_pesanan) }}" class="btn btn-sm btn-info">
+                                        <a href="{{ route('vendor.detail-pesanan', $pesanan->id_pesanan) }}" class="btn btn-sm btn-info btn-nav-spinner">
                                             <i class="mdi mdi-eye"></i> Detail
                                         </a>
                                     </td>
@@ -55,3 +55,16 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-nav-spinner').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            btn.classList.add('disabled');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memuat...';
+        });
+    });
+});
+</script>
+@endpush

@@ -111,6 +111,35 @@
                 </ul>
             </div>
         </li>
+
+        {{-- ✅ TAMBAHAN BARU: Menu Customer (Modul 7) --}}
+        <li class="nav-item {{ request()->is('data-customer*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#customer-menu"
+               aria-expanded="{{ request()->is('data-customer*') ? 'true' : 'false' }}"
+               aria-controls="customer-menu">
+                <span class="menu-title">Customer</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-account-group menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->is('data-customer*') ? 'show' : '' }}" id="customer-menu">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('customer.index') ? 'active' : '' }}"
+                           href="{{ route('customer.index') }}">Data Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('customer.createBlob') ? 'active' : '' }}"
+                           href="{{ route('customer.createBlob') }}">Tambah Customer 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('customer.createPath') ? 'active' : '' }}"
+                           href="{{ route('customer.createPath') }}">Tambah Customer 2</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {{-- ✅ END TAMBAHAN --}}
+
         @endif
 
         {{-- KHUSUS VENDOR --}}

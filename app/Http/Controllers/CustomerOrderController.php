@@ -207,7 +207,24 @@ class CustomerOrderController extends Controller
     public function status($id_pesanan)
     {
         $pesanan = Pesanan::with(['detailPesanans.menu', 'payments'])->findOrFail($id_pesanan);
-        return view('customer.order.status', compact('pesanan'));
+
+        $qrBase64 = null;
+
+        // Hanya generate QR jika pesanan sudah LUNAS
+        if ($pesanan->status_bayar == 1) {
+            $qrCode = new QrCode(
+                data: (string) $pesanan->id_pesanan,
+                encoding: new Encoding('UTF-8'),
+                errorCorrectionLevel: ErrorCorrectionLevel::High,
+                size: 200,
+                margin: 10,
+            );
+
+            $writer = new PngWriter();
+            $result = $writer->write($qrCode);
+            $qrBase64 = base64_encode($result->getString());
+        }
+        return view('customer.order.status', compact('pesanan', 'qrBase64'));
     }
 
     //  * Update status pembayaran dari client-side (setelah Snap callback)

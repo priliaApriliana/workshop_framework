@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Picqer\Barcode\BarcodeGeneratorSVG;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class BarangController extends Controller
 {
@@ -92,12 +92,14 @@ class BarangController extends Controller
             ], 422);
         }
 
-        $generator = new BarcodeGeneratorSVG();
+        $generator = new BarcodeGeneratorPNG();
         $barcodes = [];
         foreach ($barang as $item) {
-            $barcodes[$item->id_barang] = $generator->getBarcode(
-                (string) $item->id_barang,
-                $generator::TYPE_CODE_128
+            $barcodes[$item->id_barang] = base64_encode(
+                $generator->getBarcode(
+                    (string) $item->id_barang,
+                    $generator::TYPE_CODE_128
+                )
             );
         }
 

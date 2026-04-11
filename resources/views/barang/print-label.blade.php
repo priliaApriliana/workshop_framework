@@ -1,4 +1,3 @@
-```php
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,8 +5,8 @@
     <title>Label Harga</title>
     <style>
         @page {
-        size: A4 portrait;
-        margin: 5mm;
+            size: A4 portrait;
+            margin: 5mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; }
@@ -15,16 +14,17 @@
             width: 200mm;
             border-collapse: collapse;
             table-layout: fixed;
+            margin: 0 auto; /* Tengah tabel di halaman jika butuh margin */
         }
         td {
             width: 38mm;
             height: 18.5mm;
             text-align: center;
             vertical-align: middle;
-            /* top right bottom left */
-            padding: 2.7mm 1mm 0 11mm;
+            padding: 1mm; /* PERBAIKAN: Gunakan padding yang seimbang (atas-bawah-kiri-kanan) */
             font-weight: bold;
-            color: #000;
+            color: #000;    
+            border: 0.5px dashed #999;
         }
         .label-id {
             font-size: 6pt;
@@ -43,7 +43,7 @@
         .label-harga {
             font-size: 8pt;
         }
-        .label-barcode svg {
+        .label-barcode img {
             width: 30mm;
             height: 8mm;
             margin-bottom: 0.5mm;
@@ -69,7 +69,10 @@
 
                     @elseif($barangIndex < count($barang))
                         <td>
-                            <div class="label-barcode">{!! $barcodes[$barang[$barangIndex]->id_barang] !!}</div>
+                            <div class="label-barcode">
+                                <img src="data:image/png;base64,{{ $barcodes[$barang[$barangIndex]->id_barang] }}" 
+                                alt="barcode">
+                            </div>
                             <div class="label-id">{{ $barang[$barangIndex]->id_barang }}</div>
                             <div class="label-nama">{{ \Illuminate\Support\Str::limit($barang[$barangIndex]->nama, 25) }}</div>
                             <div class="label-harga-text">Harga</div>

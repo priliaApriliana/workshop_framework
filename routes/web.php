@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +11,7 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\CustomerOrderController;
 use App\Http\Controllers\VendorOrderController;
+use App\Http\Controllers\CustomerController;
 
 // ==========================================
 // LANDING PAGE (PUBLIC - Halaman Utama)
@@ -102,4 +103,16 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{id_menu}', [VendorOrderController::class, 'menuDestroy'])->name('destroy');
         });
     });
+
+    // modul 7 
+    Route::prefix('data-customer')->name('customer.')->group(function () {
+        Route::get('/',              [CustomerController::class, 'index'])->name('index');
+        Route::get('/tambah-blob',   [CustomerController::class, 'createBlob'])->name('createBlob');
+        Route::post('/simpan-blob',  [CustomerController::class, 'storeBlob'])->name('storeBlob');
+        Route::get('/tambah-path',   [CustomerController::class, 'createPath'])->name('createPath');
+        Route::post('/simpan-path',  [CustomerController::class, 'storePath'])->name('storePath');
+        Route::get('/foto-blob/{id}',[CustomerController::class, 'fotoBlob'])->name('fotoBlob');
+        Route::delete('/{id}',         [CustomerController::class, 'destroy'])->name('destroy');
+    });
+    
 });

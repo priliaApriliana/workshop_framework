@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 \resources/views/layouts/partials/sidebar.blade.php = 'resources/views/layouts/partials/sidebar.blade.php';
 \ = <<<HTML
 <nav class="sidebar sidebar-offcanvas" id="sidebar">

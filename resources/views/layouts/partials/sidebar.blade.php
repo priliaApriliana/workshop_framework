@@ -1,4 +1,4 @@
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
+﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         {{-- Profile Section --}}
         @auth
@@ -112,7 +112,7 @@
             </div>
         </li>
 
-        {{-- ✅ TAMBAHAN BARU: Menu Customer (Modul 7) --}}
+        {{-- TAMBAHAN BARU: Menu Customer (Modul 7) --}}
         <li class="nav-item {{ request()->is('data-customer*') ? 'active' : '' }}">
             <a class="nav-link" data-bs-toggle="collapse" href="#customer-menu"
                aria-expanded="{{ request()->is('data-customer*') ? 'true' : 'false' }}"
@@ -138,7 +138,7 @@
                 </ul>
             </div>
         </li>
-        {{-- ✅ END TAMBAHAN --}}
+        {{-- END TAMBAHAN --}}
 
         @endif
 

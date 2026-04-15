@@ -118,10 +118,12 @@ let stream = null;
 let devices = [];
 let deviceIndex = 0;
 
+// Buka kamera saat modal ditampilkan
 document.getElementById('modalKamera').addEventListener('show.bs.modal', function () {
     startKamera();
 });
 
+// Stop kamera saat modal ditutup
 document.getElementById('modalKamera').addEventListener('hide.bs.modal', function () {
     if (stream) {
         stream.getTracks().forEach(t => t.stop());
@@ -129,6 +131,7 @@ document.getElementById('modalKamera').addEventListener('hide.bs.modal', functio
     }
 });
 
+// Fungsi untuk memulai kamera
 function startKamera(deviceId = null) {
     if (stream) stream.getTracks().forEach(t => t.stop());
 
@@ -146,12 +149,14 @@ function startKamera(deviceId = null) {
         .catch(err => alert('Kamera tidak dapat diakses: ' + err.message));
 }
 
+// Fungsi untuk memilih kamera (jika ada lebih dari 1)
 function pilihKamera() {
     if (devices.length <= 1) { alert('Hanya ada 1 kamera tersedia.'); return; }
     deviceIndex = (deviceIndex + 1) % devices.length;
     startKamera(devices[deviceIndex].deviceId);
 }
 
+// Fungsi untuk mengambil foto dari video
 function ambilFoto() {
     const video  = document.getElementById('video');
     const canvas = document.getElementById('canvas');
@@ -160,6 +165,7 @@ function ambilFoto() {
     canvas.getContext('2d').drawImage(video, 0, 0);
 }
 
+// Fungsi untuk menyimpan foto ke input hidden dan preview
 function simpanFoto() {
     const canvas = document.getElementById('canvas');
     if (canvas.width === 0) { alert('Ambil foto terlebih dahulu!'); return; }

@@ -21,7 +21,7 @@
             height: 18.5mm;
             text-align: center;
             vertical-align: middle;
-            padding: 1mm; /* PERBAIKAN: Gunakan padding yang seimbang (atas-bawah-kiri-kanan) */
+            padding: 1mm; /* padding yang seimbang (atas-bawah-kiri-kanan) */
             font-weight: bold;
             color: #000;    
             border: 0.5px dashed #999;

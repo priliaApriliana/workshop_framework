@@ -9,20 +9,20 @@ use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class BarangController extends Controller
 {
-    // ── INDEX ────────────────────────────────────────────────────────────────
+    // ── INDEX 
     public function index()
     {
         $barang = Barang::orderBy('timestamp', 'desc')->get();
         return view('barang.index', compact('barang'));
     }
 
-    // ── CREATE ───────────────────────────────────────────────────────────────
+    // ── CREATE 
     public function create()
     {
         return view('barang.create');
     }
 
-    // ── STORE ────────────────────────────────────────────────────────────────
+    // ── STORE 
     public function store(Request $request)
     {
         $request->validate([
@@ -36,13 +36,13 @@ class BarangController extends Controller
                          ->with('success', 'Barang berhasil ditambahkan!');
     }
 
-    // ── EDIT ─────────────────────────────────────────────────────────────────
+    // ── EDIT 
     public function edit(Barang $barang)
     {
         return view('barang.edit', compact('barang'));
     }
 
-    // ── UPDATE ───────────────────────────────────────────────────────────────
+    // ── UPDATE 
     public function update(Request $request, Barang $barang)
     {
         $request->validate([
@@ -56,7 +56,7 @@ class BarangController extends Controller
                          ->with('success', 'Barang berhasil diperbarui!');
     }
 
-    // ── DESTROY ──────────────────────────────────────────────────────────────
+    // ── DESTROY 
     public function destroy(Barang $barang)
     {
         $barang->delete();
@@ -65,7 +65,7 @@ class BarangController extends Controller
                          ->with('success', 'Barang berhasil dihapus!');
     }
 
-    // ── PRINT LABEL PDF ──────────────────────────────────────────────────────
+    // ── PRINT LABEL PDF 
     public function printLabel(Request $request)
     {
         $request->validate([

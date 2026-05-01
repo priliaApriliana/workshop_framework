@@ -59,7 +59,7 @@ class CustomerOrderController extends Controller
     }
 
     // Tampilkan menu berdasarkan vendor yang dipilih
-    // SELECT BERJENJANG: Customer pilih vendor → muncul menu vendor tsb
+    // SELECT BERJENJANG: Customer pilih vendor â†’ muncul menu vendor tsb
     public function show($id_vendor)
     {
         $vendor = Vendor::findOrFail($id_vendor);
@@ -69,7 +69,7 @@ class CustomerOrderController extends Controller
     }
 
     // Buat pesanan + Generate Guest user otomatis
-    // Setelah order dibuat → redirect ke halaman pembayaran
+    // Setelah order dibuat â†’ redirect ke halaman pembayaran
     public function store(Request $request)
     {
         $request->validate([
@@ -248,7 +248,7 @@ class CustomerOrderController extends Controller
             $pesanan->metode_bayar = $metodeBayar;
         }
 
-        // Jika settlement → lunas
+        // Jika settlement â†’ lunas
         if ($transactionStatus === 'settlement' || $transactionStatus === 'capture') {
             $pesanan->status_bayar = 1;
 
@@ -301,7 +301,7 @@ class CustomerOrderController extends Controller
             $transactionStatus = $status->transaction_status ?? 'unknown';
             $paymentType = $status->payment_type ?? 'unknown';
 
-            // Jika settlement → update ke lunas
+            // Jika settlement â†’ update ke lunas
             if ($transactionStatus === 'settlement' || $transactionStatus === 'capture') {
                 $pesanan->status_bayar = 1;
 
@@ -424,5 +424,21 @@ class CustomerOrderController extends Controller
             Log::error('Midtrans Callback Error: ' . $e->getMessage());
             return response()->json(['message' => 'Error processing callback'], 500);
         }
+    }
+
+    public function showQRCode($id_pesanan)
+    {
+        $pesanan = Pesanan::find($id_pesanan);
+
+        if (!$pesanan) {
+            abort(404, 'Pesanan tidak ditemukan');
+        }
+
+        $payment = Payment::where('id_pesanan', $id_pesanan)->first();
+
+        return view('qrcode_display', [
+            'pesanan' => $pesanan,
+            'payment' => $payment,
+        ]);
     }
 }

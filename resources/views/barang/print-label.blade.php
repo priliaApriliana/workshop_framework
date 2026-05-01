@@ -6,47 +6,52 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 5mm;
+            margin: 10mm 8mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; }
-        table {           
-            width: 200mm;
-            border-collapse: collapse;
+
+        table {
+            width: 194mm;
+            border-collapse: separate;
+            border-spacing: 1mm;
             table-layout: fixed;
-            margin: 0 auto; /* Tengah tabel di halaman jika butuh margin */
         }
         td {
             width: 38mm;
-            height: 18.5mm;
+            height: 18mm;
             text-align: center;
-            vertical-align: middle;
-            padding: 1mm; /* padding yang seimbang (atas-bawah-kiri-kanan) */
+            vertical-align: top;
+            padding: 2.7mm 1mm 0 1mm;
             font-weight: bold;
-            color: #000;    
+            color: #000;
             border: 0.5px dashed #999;
-        }
-        .label-id {
-            font-size: 6pt;
-            margin-bottom: 1mm;
-        }
-        .label-nama {
-            font-size: 6pt;
-            margin-bottom: 1mm;
-            word-break: break-word;
-            line-height: 1.2;
-        }
-        .label-harga-text {
-            font-size: 5.5pt;
-            margin-bottom: 0.5mm;
-        }
-        .label-harga {
-            font-size: 8pt;
+            overflow: hidden;
         }
         .label-barcode img {
-            width: 30mm;
-            height: 8mm;
+            width: 24mm;
+            height: 7mm;
+            display: block;
             margin-bottom: 0.5mm;
+        }
+        .label-id {
+            font-size: 5pt;
+            line-height: 1;
+            margin-bottom: 0.3mm;
+        }
+        .label-nama {
+            font-size: 5.5pt;
+            word-break: break-word;
+            line-height: 1.2;
+            margin-bottom: 0.3mm;
+        }
+        .label-harga-text {
+            font-size: 5pt;
+            line-height: 1;
+        }
+        .label-harga {
+            font-size: 7.5pt;
+            line-height: 1;
         }
     </style>
 </head>
@@ -70,7 +75,7 @@
                     @elseif($barangIndex < count($barang))
                         <td>
                             <div class="label-barcode">
-                                <img src="data:image/png;base64,{{ $barcodes[$barang[$barangIndex]->id_barang] }}" 
+                                <img src="data:image/png;base64,{{ $barcodes[$barang[$barangIndex]->id_barang] }}"
                                 alt="barcode">
                             </div>
                             <div class="label-id">{{ $barang[$barangIndex]->id_barang }}</div>

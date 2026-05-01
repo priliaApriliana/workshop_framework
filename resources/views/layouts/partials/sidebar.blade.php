@@ -1,4 +1,4 @@
-﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         {{-- Profile Section --}}
         @auth
@@ -90,6 +90,15 @@
                 <i class="mdi mdi-cart menu-icon"></i>
             </a>
         </li>
+
+        {{-- TAMBAHKAN: Link ke Barcode Scanner (Praktikum 1) --}}
+        <li class="nav-item {{ request()->is('barcode-scanner*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('barcode.scanner') }}">
+                <span class="menu-title">Barcode Scanner</span>
+                <i class="mdi mdi-barcode-scan menu-icon"></i>
+            </a>
+        </li>
+
         <li class="nav-item {{ request()->is('pdf*') ? 'active' : '' }}">
             <a class="nav-link" data-bs-toggle="collapse" href="#pdf-menu" aria-expanded="{{ request()->is('pdf*') ? 'true' : 'false' }}" aria-controls="pdf-menu">
                 <span class="menu-title">PDF Generator</span>
@@ -169,6 +178,14 @@
             <a class="nav-link" href="{{ route('vendor.lunas-pesanan') }}">
                 <span class="menu-title">Pesanan Lunas</span>
                 <i class="mdi mdi-check-decagram text-info menu-icon"></i>
+            </a>
+        </li>
+
+        {{-- TAMBAHKAN: Link QR Scanner untuk Vendor --}}
+        <li class="nav-item {{ request()->is('vendor/qr-scanner*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('vendor.qr-scanner') }}">
+                <span class="menu-title">QR Scanner</span>
+                <i class="mdi mdi-qrcode-scan menu-icon"></i>
             </a>
         </li>
         @endif

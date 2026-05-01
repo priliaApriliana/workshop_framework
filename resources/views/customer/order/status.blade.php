@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Status Pesanan')
 @section('icon', 'mdi-receipt-text')
@@ -121,6 +121,9 @@
                         <p class="text-muted mt-1" style="font-size:12px;">
                             ID Pesanan: <strong>{{ $pesanan->id_pesanan }}</strong>
                         </p>
+                        <a href="{{ route('customer.order.qrcode', $pesanan->id_pesanan) }}" class="btn btn-outline-primary btn-sm mt-2">
+                            Buka Halaman QR Permanen
+                        </a>
                     </div>
                 @endif
 

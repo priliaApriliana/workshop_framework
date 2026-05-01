@@ -171,8 +171,8 @@ $(document).ready(function() {
             "paginate": {
                 "first"    : "Pertama",
                 "last"     : "Terakhir",
-                "next"     : "›",
-                "previous" : "‹"
+                "next"     : "ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âº",
+                "previous" : "ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¹"
             }
         },
         "columnDefs": [

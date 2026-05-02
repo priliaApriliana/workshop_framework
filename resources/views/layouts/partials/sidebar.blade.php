@@ -22,26 +22,42 @@
         <li class="nav-item nav-category">
             <span class="nav-link">PUBLIC AREA</span>
         </li>
-        <li class="nav-item {{ request()->is('customer/order*') && !request()->is('customer/order/*/payment') && !request()->is('customer/order/*/status') ? 'active' : '' }}">
+        <li class="nav-item {{ request()->is('customer/order*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('customer.order.index') }}">
                 <span class="menu-title">Customer Order</span>
                 <i class="mdi mdi-storefront menu-icon"></i>
             </a>
         </li>
-        <li class="nav-item {{ request()->is('customer/order/*/payment') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('customer.order.index') }}">
-                <span class="menu-title">Payment</span>
-                <i class="mdi mdi-credit-card-outline menu-icon"></i>
+        @if(session('last_order_id'))
+        <li class="nav-item {{ request()->is('customer/order/*/payment') || request()->is('customer/order/*/status') || request()->is('customer/qrcode-permanen') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#pesanan-terakhir-menu" aria-expanded="true" aria-controls="pesanan-terakhir-menu">
+                <span class="menu-title">Pesanan Terakhir</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-receipt-text menu-icon"></i>
             </a>
+            <div class="collapse show" id="pesanan-terakhir-menu">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('customer/order/*/payment') ? 'active' : '' }}" href="{{ route('customer.order.payment', session('last_order_id')) }}">Payment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('customer/order/*/status') ? 'active' : '' }}" href="{{ route('customer.order.status', session('last_order_id')) }}">Status Pesanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('customer/qrcode-permanen') ? 'active' : '' }}" href="{{ route('customer.order.qrcode-permanen') }}">QR Pesanan</a>
+                    </li>
+                </ul>
+            </div>
         </li>
-        <li class="nav-item {{ request()->is('customer/order/*/status') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('customer.order.index') }}">
-                <span class="menu-title">Status Pesanan</span>
-                <i class="mdi mdi-check-circle-outline menu-icon"></i>
+        @else
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                <span class="menu-title">Pesanan Terakhir</span>
+                <i class="mdi mdi-receipt-text menu-icon"></i>
             </a>
         </li>
         @endif
-
+        @endif
         @auth
         {{-- MENU KHUSUS ADMIN --}}
         @if(Auth::user()->isAdmin())

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +43,11 @@ Route::prefix("customer")->name("customer.")->group(function () {
 
 // Midtrans Webhook Notification (server-to-server, tanpa CSRF)
 Route::post("/midtrans/callback", [CustomerOrderController::class, "midtransCallback"])->name("midtrans.callback");
+// ==========================================
+// QR CODE PESANAN (PUBLIC)
+// ==========================================
+Route::get("/customer/pesanan/{id_pesanan}/qrcode", [CustomerOrderController::class, "showQRCode"])->name("customer.order.qrcode");
+Route::get("/customer/qrcode-permanen", [CustomerOrderController::class, "permanentQRCode"])->name("customer.order.qrcode-permanen");
 
 // =====================
 // ROUTES YANG PERLU LOGIN
@@ -125,9 +130,6 @@ Route::middleware("auth")->group(function () {
     // ==========================================
     // TM 9 - PRAKTIKUM 2 : QR CODE READER
     // ==========================================
-    // CUSTOMER: Display QR Code setelah pembayaran
-    Route::get("/customer/pesanan/{id_pesanan}/qrcode", [CustomerOrderController::class, "showQRCode"])->name("customer.order.qrcode");
-
     // VENDOR: QR Code Scanner
     Route::get("/vendor/qr-scanner", [VendorQRScannerController::class, "index"])->name("vendor.qr-scanner");
     Route::post("/api/vendor/scan-qr", [VendorQRScannerController::class, "scanQR"])->name("api.vendor.scan-qr");

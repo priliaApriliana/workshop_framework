@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     var page = document.getElementById('barcode-scanner-page');
     if (!page) {
         return;
@@ -18,27 +18,14 @@
     var scannerPaused = false;
     var audioCtx = null;
     var scanner = null;
+    var audioInitialized = false;
 
-    var audioStatus = document.getElementById('audio-status');
     var scannerStatus = document.getElementById('scanner-status');
-    var enableSoundButton = document.getElementById('btn-enable-sound');
+    var scannerCard = document.getElementById('scanner-card');
     var restartButton = document.getElementById('btn-restart-scanner');
     var resultContainer = document.getElementById('result-container');
     var errorContainer = document.getElementById('error-container');
     var errorMessage = document.getElementById('error_message');
-
-    function setAudioStatus(message, tone) {
-        if (!audioStatus) return;
-        audioStatus.textContent = message;
-        audioStatus.className = 'text-muted small';
-        if (tone === 'success') {
-            audioStatus.className = 'text-success small';
-        } else if (tone === 'warning') {
-            audioStatus.className = 'text-warning small';
-        } else if (tone === 'danger') {
-            audioStatus.className = 'text-danger small';
-        }
-    }
 
     function setScannerStatus(message, tone) {
         if (!scannerStatus) return;
@@ -55,30 +42,35 @@
         }
     }
 
+    /**
+     * Initialize audio context on first use
+     * This will be called during first successful scan
+     */
     function initAudio() {
         try {
             if (!audioCtx) {
                 var AudioCtx = window.AudioContext || window.webkitAudioContext;
                 if (!AudioCtx) {
-                    setAudioStatus('Browser tidak mendukung audio beep.', 'warning');
-                    return false;
+                    console.warn('Browser tidak mendukung Web Audio API');
+                    return Promise.resolve(false);
                 }
                 audioCtx = new AudioCtx();
             }
+            
             if (audioCtx.state === 'suspended') {
                 return audioCtx.resume().then(function () {
-                    setAudioStatus('Suara aktif.', 'success');
+                    audioInitialized = true;
                     return true;
-                }).catch(function () {
-                    setAudioStatus('Suara belum aktif.', 'warning');
+                }).catch(function (err) {
+                    console.warn('Audio resume failed:', err);
                     return false;
                 });
             }
-            setAudioStatus('Suara aktif.', 'success');
+            
+            audioInitialized = true;
             return Promise.resolve(true);
         } catch (e) {
             console.warn('initAudio error', e);
-            setAudioStatus('Suara belum aktif.', 'warning');
             return Promise.resolve(false);
         }
     }
@@ -92,6 +84,10 @@
         }, (duration || 200) + 250);
     }
 
+    /**
+     * Play beep sound otomatis
+     * Ini akan dipanggil otomatis saat barcode berhasil di-scan
+     */
     function playBeep(duration, frequency) {
         var beepDuration = duration || 200;
         var beepFrequency = frequency || 800;
@@ -164,10 +160,14 @@
         if (namaBarang) namaBarang.textContent = data.nama || '-';
         if (hargaBarang) hargaBarang.textContent = formatHarga(data.harga);
 
+        if (scannerCard) {
+            scannerCard.style.display = 'none';
+        }
+
         if (resultContainer) {
             resultContainer.style.display = 'block';
         }
-        setScannerStatus('Barcode terbaca. Scanner dijeda sementara.', 'success');
+        setScannerStatus('Barcode terbaca. Scanner ditutup sementara.', 'success');
     }
 
     function searchBarang(idBarang) {
@@ -207,6 +207,13 @@
         });
     }
 
+    /**
+     * Ketika barcode berhasil di-scan
+     * Sistem otomatis akan:
+     * 1. Play beep sound
+     * 2. Pause scanner
+     * 3. Fetch data barang dari API
+     */
     function onScanSuccess(decodedText) {
         if (isProcessing) {
             return;
@@ -221,6 +228,7 @@
             scanner.pause();
         }
 
+        // AUTO BEEP - Tidak perlu user click tombol apapun
         playBeep(200, 800).then(function () {
             return searchBarang(decodedText);
         });
@@ -236,17 +244,16 @@
         hideMessages();
         isProcessing = false;
         scannerPaused = false;
+
+        if (scannerCard) {
+            scannerCard.style.display = 'block';
+        }
+
         setScannerStatus('Scanner aktif kembali. Arahkan barcode ke kamera.', 'secondary');
 
         if (scanner && typeof scanner.resume === 'function') {
             scanner.resume();
         }
-    }
-
-    if (enableSoundButton) {
-        enableSoundButton.addEventListener('click', function () {
-            initAudio();
-        });
     }
 
     if (restartButton) {
@@ -255,22 +262,24 @@
         });
     }
 
-    scanner = new window.Html5QrcodeScanner('qr-reader', {
-        fps: 20,
-        qrbox: { width: 250, height: 250 },
-        rememberLastUsedCamera: true,
-        formatsToSupport: [
-            window.Html5QrcodeSupportedFormats.CODE_128,
-            window.Html5QrcodeSupportedFormats.CODE_39,
-            window.Html5QrcodeSupportedFormats.EAN_13,
-            window.Html5QrcodeSupportedFormats.EAN_8,
-            window.Html5QrcodeSupportedFormats.UPC_A,
-            window.Html5QrcodeSupportedFormats.QR_CODE
-        ]
-    });
+    // Initialize scanner
+    try {
+        scanner = new Html5QrcodeScanner('qr-reader', {
+            fps: 30,
+            qrbox: { width: 300, height: 300 },
+            rememberLastUsedCamera: true,
+            supportedFormats: [
+                'CODE_128', 'CODE_39', 'CODE_93', 'CODE_11',
+                'EAN_13', 'EAN_8',
+                'UPC_A', 'UPC_E',
+                'ITF', 'RSS_14'
+            ]
+        }, false);
 
-    scanner.render(onScanSuccess, onScanError);
-
-    setAudioStatus('Suara belum aktif.', 'warning');
-    setScannerStatus('Scanner siap. Izinkan kamera dan klik "Aktifkan Suara" sekali.', 'secondary');
+        scanner.render(onScanSuccess, onScanError);
+        setScannerStatus('Scanner siap. Silakan arahkan barcode ke kamera.', 'secondary');
+    } catch (e) {
+        console.error('Scanner initialization error:', e);
+        setScannerStatus('Error inisialisasi scanner: ' + e.message, 'danger');
+    }
 })();

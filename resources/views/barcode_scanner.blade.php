@@ -1,11 +1,11 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Barcode Scanner')
 @section('content')
 <div class="container mt-4" id="barcode-scanner-page" data-search-url="{{ route('api.barcode.search') }}">
     <div class="row">
         <div class="col-lg-10 offset-lg-1">
-            <div class="card mb-3">
+            <div class="card mb-3" id="scanner-card">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Barcode Scanner - Praktikum 1</h4>
                 </div>
@@ -15,17 +15,9 @@
                         <ol class="mb-0 ps-3">
                             <li>Buka halaman scanner.</li>
                             <li>Izinkan akses kamera di browser.</li>
-                            <li>Klik tombol <strong>Aktifkan Suara</strong> sekali untuk membuka audio.</li>
                             <li>Arahkan barcode ke kamera.</li>
-                            <li>Jika terbaca, scanner berhenti sementara, berbunyi beep, lalu data barang tampil.</li>
+                            <li>Jika terbaca, scanner berhenti sementara, berbunyi beep otomatis, lalu data barang tampil.</li>
                         </ol>
-                    </div>
-
-                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                        <button type="button" class="btn btn-gradient-primary" id="btn-enable-sound">
-                            Aktifkan Suara
-                        </button>
-                        <span class="text-muted small" id="audio-status">Suara belum aktif.</span>
                     </div>
 
                     <div id="scanner-status" class="alert alert-secondary py-2 mb-3" role="status">
@@ -36,7 +28,7 @@
                     <p class="text-muted mt-2 text-center mb-0"><small>Arahkan barcode ke depan kamera</small></p>
 
                     <div id="beep-indicator" class="text-center mt-2" style="display:none;">
-                        <span id="beep-badge" class="badge bg-success" style="font-size:1.1rem;padding:0.6rem 1rem;">Beep!</span>
+                        <span id="beep-badge" class="badge bg-success" style="font-size:1.1rem;padding:0.6rem 1rem;">🔊 Beep!</span>
                     </div>
                 </div>
             </div>

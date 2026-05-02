@@ -65,7 +65,7 @@ class VendorQRScannerController extends Controller
             'data' => [
                 'id_pesanan' => $pesanan->id_pesanan,
                 'nama_customer' => $pesanan->nama_customer,
-                'status_bayar' => $pesanan->status_bayar,
+                'status_bayar' => ($pesanan->status_bayar ? 'paid' : 'unpaid'),
                 'total' => $pesanan->total,
                 'menus' => $menuList,
             ],

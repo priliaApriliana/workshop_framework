@@ -426,6 +426,16 @@ class CustomerOrderController extends Controller
         }
     }
 
+    public function permanentQRCode()
+    {
+        $idPesanan = session('last_order_id');
+
+        if (!$idPesanan) {
+            return redirect()->route('customer.order.index')->with('error', 'Belum ada pesanan terakhir yang bisa dibuka.');
+        }
+
+        return redirect()->route('customer.order.qrcode', $idPesanan);
+    }
     public function showQRCode($id_pesanan)
     {
         $pesanan = Pesanan::find($id_pesanan);
